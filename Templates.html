@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DevDashboard</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+        <h1><a href="/">DevDashboard</a></h1>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
+
+
+# ===========================
+# templates/index.html
+
+{% extends "layout.html" %}
+{% block content %}
+    <a href="/add">+ Add Project</a>
+    <ul>
+    {% for project in projects %}
+        <li><a href="/project/{{ project.id }}">{{ project.title }}</a> ({{ project.status }})</li>
+    {% endfor %}
+    </ul>
+{% endblock %}
+
+
+# ===========================
+# templates/add_project.html
+
+{% extends "layout.html" %}
+{% block content %}
+    <h2>Add New Project</h2>
+    <form method="POST">
+        <input name="title" placeholder="Title" required><br>
+        <textarea name="description" placeholder="Description" required></textarea><br>
+        <select name="status">
+            <option>Planning</option>
+            <option>In Progress</option>
+            <option>Completed</option>
+        </select><br>
+        <button type="submit">Add</button>
+    </form>
+{% endblock %}
+
+
+# ===========================
+# templates/view_project.html
+
+{% extends "layout.html" %}
+{% block content %}
+    <h2>{{ project.title }}</h2>
+    <p>{{ project.description }}</p>
+    <p>Status: <strong>{{ project.status }}</strong></p>
+    <a href="/">Back</a>
+{% endblock %}
